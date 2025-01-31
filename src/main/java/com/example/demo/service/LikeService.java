@@ -16,7 +16,7 @@ public class LikeService {
 
     @Transactional
     public Like save(SaveLikeResponseDto saveLikeResponseDto){
-        return likeRepository.save(new Like(saveLikeResponseDto.getUserId(), saveLikeResponseDto.getPostId()));
+        return likeRepository.save(new Like(saveLikeResponseDto.getUserId(), saveLikeResponseDto.getPost()));
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package com.example.demo.dto.response;
 
+import com.example.demo.domain.Post;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,12 +8,12 @@ import lombok.Setter;
 public class SaveLikeResponseDto {
     private Long likeId;
     private Long userId;
-    private Long postId;
+    private Post post;
 
     protected SaveLikeResponseDto() {}
 
-    public SaveLikeResponseDto( Long userId, Long postId) {
+    public SaveLikeResponseDto( Long userId, Post post) {
         this.userId = userId;
-        this.postId = postId;
+        this.post = post;
     }
 }

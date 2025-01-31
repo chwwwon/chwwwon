@@ -14,6 +14,14 @@ public class Reply {
 
     private String reply;
 
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id")
+    private Post post;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
+
     protected Reply(){}
 
     public Reply(String reply){

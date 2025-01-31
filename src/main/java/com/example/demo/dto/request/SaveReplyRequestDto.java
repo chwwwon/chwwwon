@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class SaveReplyRequestDto {
-    private String reply;
+    private final String reply;
 
     @JsonCreator
     public SaveReplyRequestDto(@JsonProperty("reply") String reply) {

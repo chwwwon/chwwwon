@@ -3,6 +3,8 @@ package com.example.demo.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Table(name = "posts")
@@ -12,16 +14,24 @@ public class Post {
     @Column(name = "post_id")
     private Long postId;
 
-    private Long userId;
-
     private String title;
 
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "post")
+    private List<Reply> replies;
+
+    @OneToMany(mappedBy = "post")
+    private List<Like> likes;
+
     protected Post() {}
 
-    public Post(Long userId, String title, String content) {
-        this.userId = userId;
+    public Post(User user, String title, String content) {
+        this.user = user;
         this.title = title;
         this.content = content;
     }

@@ -3,6 +3,9 @@ package com.example.demo.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Table(name = "likes")
@@ -14,13 +17,18 @@ public class Like {
 
     private Long userId;
 
-    private Long postId;
+    @ManyToMany(mappedBy = "likes")
+    private List<User> user = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "post_id", referencedColumnName = "post_id")
+    private Post post;
 
     protected Like(){}
 
-    public Like(Long userId, Long postId) {
+    public Like(Long userId, Post post) {
         this.userId = userId;
-        this.postId = postId;
+        this.post = post;
     }
 
 }

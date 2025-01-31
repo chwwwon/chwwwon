@@ -27,7 +27,7 @@ public class PostService {
 
     @Transactional
     public Post save(SavePostRequestDto savePostRequestDto) {
-        Post post = postRepository.save(new Post(savePostRequestDto.getUserId(), savePostRequestDto.getTitle(), savePostRequestDto.getContent()));
+        Post post = postRepository.save(new Post(savePostRequestDto.getUser(), savePostRequestDto.getTitle(), savePostRequestDto.getContent()));
         return post;
     }
 
@@ -49,10 +49,14 @@ public class PostService {
     }
 
     @Transactional
+    public List<Post> getPostList(){
+        return postRepository.findAll();
+    }
+   /* @Transactional
     public Page<Post> getPostList(int page, int size){
         Pageable pageable = (Pageable) PageRequest.of(page, size, Sort.by("postId"));
         return postRepository.findAll(pageable);
-    }
+    }*/
 
     @Transactional
     public List<Post> getPostListByUserId(Long userId){

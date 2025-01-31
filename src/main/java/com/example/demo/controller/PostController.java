@@ -39,8 +39,8 @@ public class PostController {
     }
 
     @GetMapping("/list")
-    public PostListResponseDto getPostList(@RequestParam("page") int page, @RequestParam("size") int size){
-        return new PostListResponseDto(postService.getPostList(page, size));
+    public PostListResponseDto getPostList(){
+        return new PostListResponseDto(postService.getPostList());
     }
 
     @GetMapping("/users/{userId}")

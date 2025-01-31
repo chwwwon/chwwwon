@@ -5,6 +5,9 @@ import lombok.Generated;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Table(name = "users")
@@ -19,6 +22,20 @@ public class User {
     private String nickname;
 
     private int age;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
+    @OneToMany(mappedBy = "user")
+    private List<Reply> replies;
+
+    @ManyToMany
+    @JoinTable(
+            name = "USER_LIKE",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "like_id")
+    )
+    private List<Like> likes = new ArrayList<>();
 
     protected User() {}
 
