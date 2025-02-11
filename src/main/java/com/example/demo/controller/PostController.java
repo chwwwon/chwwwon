@@ -3,10 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.domain.Post;
 import com.example.demo.dto.request.SavePostRequestDto;
 import com.example.demo.dto.request.UpdatePostRequestDto;
-import com.example.demo.dto.response.PostListResponseDto;
 import com.example.demo.dto.response.PostResponseDto;
 import com.example.demo.service.PostService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -19,13 +20,13 @@ public class PostController {
     }
 
     @PostMapping
-    public Post save(@RequestBody SavePostRequestDto savePostRequestDto){
-        return postService.save(savePostRequestDto);
+    public void save(@RequestBody SavePostRequestDto savePostRequestDto){
+        postService.save(savePostRequestDto);
     }
 
-    @PatchMapping("/{postId}")
-    public void updatePost(@PathVariable("postId") Long postId, @RequestBody UpdatePostRequestDto updatePostRequestDto){
-        postService.updatePost(postId, updatePostRequestDto);
+    @PatchMapping
+    public void updatePost(@RequestBody UpdatePostRequestDto updatePostRequestDto){
+        postService.updatePost(updatePostRequestDto);
     }
 
     @DeleteMapping("/{postId}")
@@ -33,19 +34,21 @@ public class PostController {
         postService.deletePost(postId);
     }
 
-    @GetMapping("/{postId}")
-    public PostResponseDto getPost(@PathVariable("postId") Long postId){
-        return new PostResponseDto(postService.getPost(postId));
+    @GetMapping
+    public List<PostResponseDto> getPostList(){
+        List<PostResponseDto> postList = postService.getPostList();
+        return postList;
     }
 
-    @GetMapping("/list")
-    public PostListResponseDto getPostList(){
-        return new PostListResponseDto(postService.getPostList());
+    @GetMapping("/{postId}")
+    public Post getPostByPostId(@PathVariable("postId") Long postId){
+        return postService.getPostByPostId(postId);
+        //return new PostResponseDto(postService.getPostByPostId(postId));
     }
 
     @GetMapping("/users/{userId}")
-    public PostListResponseDto getPostListByUserId(@PathVariable("userId") Long userId){
-        return new PostListResponseDto(postService.getPostListByUserId(userId));
+    public List<Post> getPostListByUserId(@PathVariable("userId") Long userId){
+        return postService.getPostListByUserId(userId);
     }
 
 }

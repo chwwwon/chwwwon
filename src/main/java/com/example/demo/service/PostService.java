@@ -1,9 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Post;
+import com.example.demo.domain.User;
 import com.example.demo.dto.request.SavePostRequestDto;
 import com.example.demo.dto.request.UpdatePostRequestDto;
 import com.example.demo.dto.response.PostResponseDto;
+import com.example.demo.exception.CommonException;
+import com.example.demo.exception.ErrorCode;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
@@ -27,30 +31,37 @@ public class PostService {
 
     @Transactional
     public Post save(SavePostRequestDto savePostRequestDto) {
-        Post post = postRepository.save(new Post(savePostRequestDto.getUser(), savePostRequestDto.getTitle(), savePostRequestDto.getContent()));
+        User user = userRepository.findById(savePostRequestDto.getUserId())
+                .orElseThrow(() -> new CommonException("찾을 수 없음 회원 아이디"));
+
+        Post post = postRepository.save(new Post(user, savePostRequestDto.getTitle(), savePostRequestDto.getContent()));
         return post;
     }
 
-    @Transactional
-    public void updatePost(Long postId, UpdatePostRequestDto updatePostRequestDto){
-        Post post = postRepository.findById(postId).orElseThrow(IllegalArgumentException::new);
+    @Transactional  //JPA 지연로딩 때문에 안 될 가능성 체크
+    public void updatePost(UpdatePostRequestDto updatePostRequestDto){
+        Post post = postRepository.findById(updatePostRequestDto.getPostId())
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_POST));
         post.updatePost(updatePostRequestDto.getTitle(), updatePostRequestDto.getContent());
     }
 
     @Transactional
     public void deletePost(Long postId){
-        Post post = postRepository.findById(postId).orElseThrow(IllegalArgumentException::new);
+        Post post = postRepository.findById(postId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_POST));
         postRepository.delete(post);
     }
 
     @Transactional
-    public Post getPost(Long postId) {
-        return postRepository.findById(postId).orElseThrow(IllegalArgumentException::new);
+    public List<PostResponseDto> getPostList(){
+        List<Post> postlist = postRepository.findAll();
+        return postlist.stream()
+                .map(PostResponseDto::new)
+                .toList();
     }
 
     @Transactional
-    public List<Post> getPostList(){
-        return postRepository.findAll();
+    public Post getPostByPostId(Long postId) {
+        return postRepository.findById(postId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_POST));
     }
    /* @Transactional
     public Page<Post> getPostList(int page, int size){

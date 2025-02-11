@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public class UpdateReplyRequestDto {
-    private String reply;
+    private String content;
 }

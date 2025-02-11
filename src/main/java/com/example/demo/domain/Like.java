@@ -15,10 +15,10 @@ public class Like {
     @Column(name = "like_id")
     private Long likeId;
 
-    private Long userId;
 
-    @ManyToMany(mappedBy = "likes")
-    private List<User> user = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "post_id")
@@ -26,8 +26,8 @@ public class Like {
 
     protected Like(){}
 
-    public Like(Long userId, Post post) {
-        this.userId = userId;
+    public Like(User user, Post post) {
+        this.user = user;
         this.post = post;
     }
 

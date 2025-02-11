@@ -16,17 +16,18 @@ public class Post {
 
     private String title;
 
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "post")
+    /*@OneToMany(mappedBy = "post")
     private List<Reply> replies;
 
     @OneToMany(mappedBy = "post")
-    private List<Like> likes;
+    private List<Like> likes;*/
 
     protected Post() {}
 
@@ -40,4 +41,6 @@ public class Post {
         this.title = title;
         this.content = content;
     }
+
+
 }

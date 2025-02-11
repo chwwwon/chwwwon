@@ -3,8 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.domain.User;
 import com.example.demo.dto.request.SaveUserRequestDto;
 import com.example.demo.dto.request.UpdateUserRequestDto;
-import com.example.demo.dto.response.UserListResponseDto;
-import com.example.demo.dto.response.UserResponseDto;
 import com.example.demo.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +13,6 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
-    private final List<User> users = new ArrayList<>();
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -24,16 +21,6 @@ public class UserController {
     @PostMapping
     public User save(@RequestBody SaveUserRequestDto saveUserRequestDto) {
         return userService.save(saveUserRequestDto);
-    }
-
-    @GetMapping("/list")
-    public UserListResponseDto getUsersList(){
-        return new UserListResponseDto(userService.getUserList());
-    }
-
-    @GetMapping("/{userId}")
-    public UserResponseDto getUser(@PathVariable("userId") Long userId) {
-        return new UserResponseDto(userService.getUser(userId));
     }
 
     @PatchMapping("/{userId}")
@@ -46,4 +33,14 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
+    @GetMapping
+    public List<User> getUsersList(){
+        return userService.getUserList();
+    }
+
+
+    @GetMapping("/{userId}")
+    public User getUserByUserId(@PathVariable("userId") Long userId) {
+        return userService.getUserByUserId(userId);
+    }
 }

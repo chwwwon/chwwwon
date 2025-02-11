@@ -14,13 +14,13 @@ public class LikeController {
         this.likeService = likeService;
     }
 
-    @PostMapping("/{postId}/like")
-    public Like save(@RequestBody SaveLikeResponseDto saveLikeResponseDto,@PathVariable("postId") Long postId){
+    @PostMapping("/like")
+    public Like save(@RequestBody SaveLikeResponseDto saveLikeResponseDto){
         return likeService.save(saveLikeResponseDto);
     }
 
-    @DeleteMapping("/{postId}/like")
-    public void deleteLike(@PathVariable("postId") Long postId){
+    @DeleteMapping("/like")
+    public void deleteLike(Long postId){
         likeService.deleteLike(postId);
     }
 }

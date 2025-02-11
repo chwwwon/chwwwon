@@ -12,7 +12,7 @@ public class Reply {
     @Column(name = "reply_id")
     private Long replyId;
 
-    private String reply;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "post_id")
@@ -24,11 +24,11 @@ public class Reply {
 
     protected Reply(){}
 
-    public Reply(String reply){
-        this.reply = reply;
+    public Reply(String content){
+        this.content = content;
     }
 
     public void updateReply(String reply){
-        this.reply = reply;
+        this.content = content;
     }
 }

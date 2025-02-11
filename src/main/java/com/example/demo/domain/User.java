@@ -23,19 +23,14 @@ public class User {
 
     private int age;
 
-    @OneToMany(mappedBy = "user")
+    /*@OneToMany(mappedBy = "user")
     private List<Post> posts;
 
     @OneToMany(mappedBy = "user")
     private List<Reply> replies;
 
-    @ManyToMany
-    @JoinTable(
-            name = "USER_LIKE",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "like_id")
-    )
-    private List<Like> likes = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Like> likes;*/
 
     protected User() {}
 

@@ -8,12 +8,12 @@ import lombok.Setter;
 public class SaveLikeResponseDto {
     private Long likeId;
     private Long userId;
-    private Post post;
+    private Long postId;
 
     protected SaveLikeResponseDto() {}
 
-    public SaveLikeResponseDto( Long userId, Post post) {
+    public SaveLikeResponseDto(Long userId, Long postId) {
         this.userId = userId;
-        this.post = post;
+        this.postId = postId;
     }
 }

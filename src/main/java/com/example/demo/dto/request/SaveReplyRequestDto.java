@@ -2,16 +2,19 @@ package com.example.demo.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
+@Getter
 public class SaveReplyRequestDto {
-    private final String reply;
+    private final String content;
+    private final Long userId;
+    private final Long postId;
 
     @JsonCreator
-    public SaveReplyRequestDto(@JsonProperty("reply") String reply) {
-        this.reply = reply;
-    }
+    public SaveReplyRequestDto(@JsonProperty("content") String content, Long userId, Long postId) {
 
-    public String getReply() {
-        return reply;
+        this.content = content;
+        this.userId = userId;
+        this.postId = postId;
     }
 }
